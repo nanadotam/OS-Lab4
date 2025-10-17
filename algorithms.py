@@ -114,3 +114,36 @@ def sjf(processes: List[Dict[str, int]]) -> Tuple[List[Dict[str, int]], float, f
     avg_turnaround_time = total_turnaround_time / n
 
     return processes, avg_waiting_time, avg_turnaround_time
+
+"""
+Pseudocode for SRT
+1. Sort processes by arrival time.
+2. Set current_time = 0.
+3. While there are still processes not done:
+   a. Find all processes that have arrived (arrival_time ≤ current_time).
+   b. Among them, pick the one with the smallest remaining burst time.
+   c. Run that process for 1 unit of time.
+   d. Reduce its remaining burst time by 1.
+   e. Increase current_time by 1.
+   f. If the process finishes (remaining time = 0), record its finish, waiting, and turnaround times.
+4. Continue until all processes are complete.
+5. Compute average waiting time and average turnaround time
+"""
+
+"""
+Pseudocode for RR
+1. Sort all processes by their arrival time.
+2. Set current_time = 0.
+3. Put all processes that have arrived into a queue (called the ready_queue).
+4. While there are still processes left to finish:
+   a. If the ready_queue is empty, move current_time forward until a process arrives.
+   b. Take the first process from the queue.
+   c. Run it for up to the time quantum (for example, 4ms).
+   d. Reduce its remaining burst time by how long it ran.
+   e. Increase current_time by the amount of time the CPU just used.
+   f. If new processes have arrived during that time, add them to the queue.
+   g. If the current process is not yet done, put it at the **end of the queue**.
+   h. If it’s done, record its finish, waiting, and turnaround times.
+5. Repeat until every process has finished.
+6. Compute average waiting time and average turnaround time
+"""
